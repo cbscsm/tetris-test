@@ -123,3 +123,23 @@ function copyBoard(board: number[][]): number[][] {
     }
     return newBoard;
 }
+
+const minoBag: MinoType[] = [
+    MinoType.I,
+    MinoType.J,
+    MinoType.L,
+    MinoType.O,
+    MinoType.S,
+    MinoType.T,
+    MinoType.Z,
+];
+let minoBagCounter = 0;
+
+export function getNextMino(): MinoType {
+    if (minoBagCounter === 0) {
+        minoBag.sort(() => Math.random() - 0.5);
+    }
+    const nextMino = minoBag[minoBagCounter]
+    minoBagCounter = (minoBagCounter + 1) % minoBag.length;
+    return nextMino;
+}
