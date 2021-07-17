@@ -1,5 +1,12 @@
 import {BlockSize, CanvasHeight, CanvasWidth, Colors} from './constants';
-import {MinoType, MinoShapes, checkBlockPosition, rotate, putDataToBoard} from './blocks';
+import {
+    MinoType,
+    MinoShapes,
+    checkBlockPosition,
+    rotate,
+    putDataToBoard,
+    getNextMino, eraseFilledLines
+} from './blocks';
 
 export class Tetris {
     private _board: number[][];
@@ -8,8 +15,8 @@ export class Tetris {
 
     private _x: number = 4;
     private _y: number = 0;
-    private _currentMino: MinoType = MinoType.T;
-    private _currentMinoData: number[][] = MinoShapes[MinoType.T];
+    private _currentMino: MinoType = getNextMino();
+    private _currentMinoData: number[][] = MinoShapes[this._currentMino];
 
 
     constructor() {
@@ -95,6 +102,9 @@ export class Tetris {
             this._board = putDataToBoard(this._board, this._x, this._y, this._currentMinoData);
             this._y = 0;
             this._x = 3;
+            this._currentMino = getNextMino();
+            this._currentMinoData = MinoShapes[this._currentMino];
+            this._board = eraseFilledLines(this._board);
         }
     }
 }
