@@ -84,15 +84,7 @@ export function checkBlockPosition(board: number[][], x: number, y: number, mino
 }
 
 export function putDataToBoard(board: number[][], x: number, y: number, mino: number[][]): number[][] {
-    const newBoard = new Array<number[]>(board.length);
-    for (let i = 0; i < board.length; i++) {
-        newBoard[i] = new Array<number>(board[i].length);
-    }
-    for (let i = 0; i < board.length; i++) {
-        for (let j = 0; j < board[i].length; j++) {
-            newBoard[i][j] = board[i][j];
-        }
-    }
+    const newBoard = copyBoard(board);
     for (let i = 0; i < mino.length; i++) {
         for (let j = 0; j < mino.length; j++) {
             if (newBoard[y+i]?.[x+j] !== undefined && mino[i][j] !== 0) newBoard[y+i][x+j] = mino[i][j];
@@ -102,6 +94,32 @@ export function putDataToBoard(board: number[][], x: number, y: number, mino: nu
 }
 
 export function eraseFilledLines(board: number[][]): number[][] {
-    const result: number[][] = [];
-    return result;
+    const newBoard = makeArray(board.length, board[0].length);
+    let eraseCount = 0;
+    for (let i = board.length - 1; i >= 0; i--) {
+        newBoard[i + eraseCount] = board[i].slice();
+        if (board[i].every(cell => cell !== 0)) eraseCount++;
+    }
+    return newBoard;
+}
+
+function makeArray(rows: number, columns: number): number[][] {
+    const newBoard = new Array<number[]>(rows);
+    for (let i = 0; i < columns; i++) {
+        newBoard[i] = new Array<number>(columns).fill(0);
+    }
+    return newBoard;
+}
+
+function copyBoard(board: number[][]): number[][] {
+    const newBoard = new Array<number[]>(board.length);
+    for (let i = 0; i < board.length; i++) {
+        newBoard[i] = new Array<number>(board[i].length);
+    }
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[i].length; j++) {
+            newBoard[i][j] = board[i][j];
+        }
+    }
+    return newBoard;
 }
