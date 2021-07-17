@@ -75,7 +75,12 @@ export function rotate(mino: number[][], direction: RotateDirection = RotateDire
 }
 
 export function checkBlockPosition(board: number[][], x: number, y: number, mino: number[][]): boolean {
-
+    for (let i = 0; i < mino.length; i++) {
+        for (let j = 0; j < mino.length; j++) {
+            if (board[y+i][x+j] !== 0 && mino[i][j] !== 0) return false;
+        }
+    }
+    return true;
 }
 
 export function putDataToBoard(board: number[][], x: number, y: number, mino: number[][]): number[][] {

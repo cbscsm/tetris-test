@@ -1,4 +1,4 @@
-import {MinoType, MinoShapes, checkBlockPosition} from '../src/blocks.ts';
+import {MinoType, MinoShapes, checkBlockPosition} from '../src/blocks';
 describe('Check block position', () => {
     let board: number[][];
     let x: number = 0, y: number = 0;

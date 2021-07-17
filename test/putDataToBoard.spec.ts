@@ -1,4 +1,4 @@
-import {MinoType, MinoShapes, putDataToBoard} from '../src/blocks.ts';
+import {MinoType, MinoShapes, putDataToBoard} from '../src/blocks';
 describe('PutDataToBoard', () => {
     let board: number[][];
     let x: number = 0, y: number = 0;
