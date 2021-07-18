@@ -14,6 +14,8 @@ export class Tetris {
     private _board: number[][];
 
     private _elapsed: number = 0;
+    private _hasMovedDown: boolean = false;
+    private _autoDropCount: number = 0;
 
     private _x: number = 4;
     private _y: number = 0;
@@ -77,6 +79,13 @@ export class Tetris {
 
         this._drawMino(ctx);
 
+        this._autoDropCount++;
+        if (this._autoDropCount > 70) {
+            if (!this._hasMovedDown) this._moveDown();
+            this._autoDropCount = 0;
+            this._hasMovedDown = false;
+        }
+
         ctx.restore();
     }
 
@@ -109,6 +118,7 @@ export class Tetris {
     }
 
     private _moveDown() {
+        this._hasMovedDown = true;
         if (checkBlockPosition(this._board, this._x, this._y + 1, this._currentMinoData)) {
             this._y++;
         } else {
